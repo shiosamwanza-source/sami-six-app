@@ -944,54 +944,6 @@ const QUICK = [
 // ═══════════════════════════════════════════════════════════════════
 // ROOT
 // ═══════════════════════════════════════════════════════════════════
-export default function App() {
-  const [screen, setScreen] = useState("home");
-  const [hist, setHist] = useState(["home"]);
-
-  const nav = (id) => { setScreen(id); setHist(h => [...h, id]); };
-  const goBack = () => {
-    if (hist.length > 1) {
-      const h = hist.slice(0,-1);
-      setHist(h); setScreen(h[h.length-1]);
-    }
-  };
-
-  const cur = SCREENS[screen] || SCREENS.home;
-  const Comp = cur.C;
-
-  return (
-    <div style={{ display:"flex", justifyContent:"center", alignItems:"center",
-      minHeight:"100vh", padding:"24px 16px",
-      background:`radial-gradient(ellipse at 25% 0%,#001a33 0%,${C.bg} 45%,#000810 100%)`,
-      fontFamily:F.sans }}>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.5)}50%{box-shadow:0 0 0 6px rgba(5,150,105,0)}}
-        ::-webkit-scrollbar{width:2px}
-        ::-webkit-scrollbar-thumb{background:${C.gold}40;border-radius:10px}
-      `}</style>
-
-      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:18 }}>
-
-        {/* Header */}
-        <div style={{ textAlign:"center" }}>
-          <p style={{ color:C.orange, fontSize:8.5, fontFamily:"'JetBrains Mono'",
-            letterSpacing:4, margin:"0 0 5px", fontWeight:700 }}>
-            INTERACTIVE PROTOTYPE · FINAL</p>
-          <h1 style={{ fontSize:32, fontFamily:"'Cormorant Garamond'", fontStyle:"italic",
-            fontWeight:700, margin:0,
-            background:`linear-gradient(135deg,${C.white} 0%,${C.goldX} 55%,${C.orange} 100%)`,
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-            SAMI SIX APP</h1>
-          <p style={{ color:C.orange, fontSize:9.5, fontFamily:"'Plus Jakarta Sans'",
-            fontWeight:600, margin:"3px 0 2px" }}>
-            Digital Procurement + Cargo Credit Platform</p>
-          <p style={{ color:C.dim, fontSize:8.5, fontFamily:"'JetBrains Mono'", margin:0 }}>
-            Six Cargo · Sami Agency · 15+ Years · Kariakoo, Dar es Salaam
-          </p>
-        </div>
-
         {/* PHONE */}
         <div style={{ width:324, background:"#0a0a0a", borderRadius:48, padding:"11px 9px",
           boxShadow:`0 60px 130px rgba(0,0,0,0.95),0 0 0 1px #1a1a1a,
@@ -1054,3 +1006,287 @@ export default function App() {
     </div>
   );
 }
+// ═══════════════════════════════════════════════════════════════════
+// NEW LANDING PAGE & ROOT ROUTING
+// ═══════════════════════════════════════════════════════════════════
+export default function App() {
+  // 'landing' ndio inakuwa ukurasa wa kwanza kabisa mtu akifungua link kutoka nje
+  const [viewMode, setViewMode] = useState("landing"); 
+  const [screen, setScreen] = useState("home");
+  const [hist, setHist] = useState(["home"]);
+
+  const nav = (id) => { setScreen(id); setHist(h => [...h, id]); };
+  const goBack = () => {
+    if (hist.length > 1) {
+      const h = hist.slice(0,-1);
+      setHist(h); setScreen(h[h.length-1]);
+    }
+  };
+
+  const cur = SCREENS[screen] || SCREENS.home;
+  const Comp = cur.C;
+
+  // 1. UKURASA WA NJE: SCREEN NZIMA LANDING PAGE
+  if (viewMode === "landing") {
+    return (
+      <div style={{ 
+        minHeight: "100vh", background: `radial-gradient(ellipse at 50% 0%, #001a33 0%, ${C.bg} 60%, #00050a 100%)`,
+        color: C.white, fontFamily: F.sans, display: "flex", flexDirection: "column", alignItems: "center",
+        justifyContent: "center", padding: "40px 20px", textAlign: "center" 
+      }}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        `}</style>
+
+        {/* Nembo na Juu ya Landing Page */}
+        <div style={{ maxWidth: 800, marginBottom: 40 }}>
+          <p style={{ color: C.orange, fontSize: 11, fontFamily: F.mono, letterSpacing: 4, fontWeight: 700, margin: "0 0 12px" }}>
+            CONGO / FARU STREET · DAR ES SALAAM
+          </p>
+          <h1 style={{ fontSize: "clamp(42px, 6vw, 64px)", fontFamily: F.display, fontStyle: "italic", fontWeight: 700, margin: 0,
+            background: `linear-gradient(135deg, ${C.white} 0%, ${C.goldX} 50%, ${C.orange} 100%)`,
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            SAMI SIX APP
+          </h1>
+          <p style={{ color: C.goldL, fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 600, marginTop: 10, fontFamily: F.sans }}>
+            Digital Trade Operating System for African SMEs
+          </p>
+          <Divider color={C.gold} />
+          <p style={{ color: C.off, fontSize: 15, maxWidth: 600, margin: "20px auto 0", lineHeight: 1.6, opacity: 0.85 }}>
+            Mfumo wa kidijitali unaowawezesha wafanyabiashara wa Afrika Mashariki kuagiza bidhaa moja kwa moja kutoka viwandani duniani kote bila kulazimika kusafiri, bila madalali, na bila hatari ya utapeli.
+          </p>
+        </div>
+
+        {/* Nguzo Mbili za Miundombinu */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, maxWidth: 750, width: "100%", marginBottom: 40 }}>
+          <div style={{ background: C.card, border: `1px solid ${C.teal}30`, padding: 24, borderRadius: 16, textAlign: "left" }}>
+            <span style={{ fontSize: 28 }}>🚢</span>
+            <h3 style={{ color: C.tealL, fontSize: 16, marginTop: 10, marginBottom: 6, fontWeight: 700 }}>Six Cargo</h3>
+            <p style={{ color: C.muted, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
+              Mizigo ya Kimataifa, maghala makuu ya ukaguzi, na uhakiki wa viwanda vya uzalishaji (China · Dubai · Uturuki).
+            </p>
+          </div>
+          <div style={{ background: C.card, border: `1px solid ${C.green}30`, padding: 24, borderRadius: 16, textAlign: "left" }}>
+            <span style={{ fontSize: 28 }}>🏛️</span>
+            <h3 style={{ color: C.greenL, fontSize: 16, marginTop: 10, marginBottom: 6, fontWeight: 700 }}>Sami Agency</h3>
+            <p style={{ color: C.muted, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
+              Uondoshaji mizigo forodha (TRA), usafirishaji wa ndani, na malori ya kisasa ya FAW hadi mikoani na nchi jirani.
+            </p>
+          </div>
+        </div>
+
+        {/* Kitufe Kikuu cha Kuingia Ndani ya Mfumo */}
+        <div style={{ zIndex: 10 }}>
+          <button onClick={() => setViewMode("app")} style={{
+            background: `linear-gradient(135deg, ${C.orange}, #b45309)`, border: "none", color: C.white,
+            padding: "16px 40px", borderRadius: 30, fontSize: 15, fontWeight: 700, cursor: "pointer",
+            boxShadow: `0 12px 30px ${C.orange}40`, transition: "all 0.3s ease", display: "flex", alignItems: "center", gap: 10
+          }}>
+            <span>Fungua Interactive Prototype</span>
+            <span style={{ fontSize: 16 }}>→</span>
+          </button>
+          <p style={{ color: C.dim, fontSize: 10, fontFamily: F.mono, marginTop: 12 }}>
+            Inayo miundo ya skrini 9, Cargo Credit Model, na mifumo ya ufuatiliaji (Live Simulation).
+          </p>
+        </div>
+
+        {/* Background Footer Detail */}
+        <div style={{ marginTop: "auto", opacity: 0.25, fontSize: 10, fontFamily: F.mono }}>
+          © 2025-2026 SAMI SIX APP · Powered by 15+ Years of Active Field Infrastructure
+        </div>
+      </div>
+    );
+  }
+
+  // 2. UKURASA WA NDANI: PHONE APP INTERACTION (Utakapobonyeza kitufe cha juu)
+  return (
+    <div style={{ display:"flex", justifyContent:"center", alignItems:"center",
+      minHeight:"100vh", padding:"24px 16px",
+      background:`radial-gradient(ellipse at 25% 0%,#001a33 0%,${C.bg} 45%,#000810 100%)`,
+      fontFamily:F.sans }}>
+
+      <style>{`
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.5)}50%{box-shadow:0 0 0 6px rgba(5,150,105,0)}}
+        ::-webkit-scrollbar{width:2px}
+        ::-webkit-scrollbar-thumb{background:${C.gold}40;border-radius:10px}
+      `}</style>
+
+      {/* Kitufe cha dharura cha kurudi kwenye Landing Page ya nje wakati wowote */}
+      <button onClick={() => setViewMode("landing")} style={{
+        position: "absolute", top: 20, left: 20, background: C.card, border: `1px solid ${C.dim}40`,
+        color: C.gold, padding: "8px 14px", borderRadius: 20, fontSize: 10, fontFamily: F.mono,
+        cursor: "pointer", zIndex: 100
+      }}>
+        ← Toka Nje (Landing Page)
+      </button>
+
+      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:18 }}>
+
+        {/* Header ya Juu ya Simu */}
+        <div style={{ textAlign:"center" }}>
+          <p style={{ color:C.orange, fontSize:8.5, fontFamily:"'JetBrains Mono'",
+            letterSpacing:4, margin:"0 0 5px", fontWeight:700 }}>
+            INTERACTIVE PROTOTYPE · LIVE SIMULATOR</p>
+          <h1 style={{ fontSize:32, fontFamily:"'Cormorant Garamond'", fontStyle:"italic",
+            fontWeight:700, margin:0,
+            background:`linear-gradient(135deg,${C.white} 0%,${C.goldX} 55%,${C.orange} 100%)`,
+            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+            SAMI SIX APP</h1>
+          <p style={{ color:C.orange, fontSize:9.5, fontFamily:"'Plus Jakarta Sans'",
+            fontWeight:600, margin:"3px 0 2px" }}>
+            Digital Procurement + Cargo Credit Platform</p>
+        </div>
+
+        {/* PHONE GANDA */}
+        <div style={{ width:324, background:"#0a0a0a", borderRadius:48, padding:"11px 9px",
+          boxShadow:`0 60px 130px rgba(0,0,0,0.95),0 0 0 1px #1a1a1a,
+            inset 0 0 0 2px #2a2a2a,0 0 100px ${C.orange}05` }}>
+          <div style={{ display:"flex", justifyContent:"center", marginBottom:7 }}>
+            <div style={{ width:92, height:10, background:"#000", borderRadius:10 }} />
+          </div>
+          <div style={{ width:306, height:606, background:C.bg, borderRadius:36,
+            overflow:"hidden", display:"flex", flexDirection:"column" }}>
+            <StatusBar />
+            {screen !== "home" && (
+              <div style={{ background:C.navy2, display:"flex", alignItems:"center",
+                padding:"7px 13px", borderBottom:`1px solid ${C.gold}15`, flexShrink:0 }}>
+                <button onClick={goBack} style={{ background:"none", border:"none", color:C.gold,
+                  cursor:"pointer", fontSize:16, padding:0, marginRight:8 }}>←</button>
+                <span style={{ color:C.white, fontSize:11, fontWeight:700,
+                  fontFamily:F.sans, flex:1 }}>{cur.title}</span>
+                <span style={{ color:C.orange, fontSize:8, fontFamily:F.mono, fontWeight:700 }}>SAMI SIX</span>
+              </div>
+            )}
+            <div style={{ flex:1, overflow:"hidden" }}><Comp nav={nav} /></div>
+            <div style={{ background:C.navy2, borderTop:`1px solid ${C.gold}15`,
+              display:"flex", padding:"6px 0 8px", flexShrink:0 }}>
+              {BOTTOM_NAV.map(item => {
+                const active = screen === item.id;
+                return (
+                  <button key={item.id} onClick={() => nav(item.id)} style={{ flex:1,
+                    background:"none", border:"none", cursor:"pointer",
+                    display:"flex", flexDirection:"column", alignItems:"center", gap:2, padding:"3px 0" }}>
+                    <span style={{ fontSize:14, filter:active?"none":"grayscale(70%) opacity(35%)" }}>{item.icon}</span>
+                    <span style={{ color:active?C.goldL:C.dim, fontSize:7.5,
+                      fontFamily:F.mono, fontWeight:active?700:400 }}>{item.label}</span>
+                    {active && <div style={{ width:14, height:2, background:C.gold,
+                      borderRadius:2, boxShadow:`0 0 6px ${C.gold}` }} />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div style={{ display:"flex", justifyContent:"center", marginTop:8 }}>
+            <div style={{ width:68, height:4, background:"#2a2a2a", borderRadius:4 }} />
+          </div>
+        </div>
+
+        {/* Quick access tabs */}
+        <div style={{ display:"flex", gap:5, flexWrap:"wrap", justifyContent:"center", maxWidth:420 }}>
+          {QUICK.map(q => (
+            <button key={q.id} onClick={() => nav(q.id)} style={{ padding:"5px 12px", borderRadius:20,
+              border:`1px solid ${screen===q.id?q.color:C.dim+"40"}`,
+              background:screen===q.id?`${q.color}18`:"transparent",
+              color:screen===q.id?q.color:C.dim,
+              fontSize:9, fontFamily:F.mono, cursor:"pointer", transition:"all 0.2s" }}>{q.label}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+/          </p>
+        </div>
+
+        {/* Background Footer Detail */}
+        <div style={{ marginTop: "auto", opacity: 0.25, fontSize: 10, fontFamily: F.mono }}>
+          © 2025-2026 SAMI SIX APP · Powered by 15+ Years of Active Field Infrastructure
+        </div>
+      </div>
+    );
+  }
+
+  // 2. UKURASA WA NDANI: PHONE APP INTERACTION (Utakapobonyeza kitufe cha juu)
+  return (
+    <div style={{ display:"flex", justifyContent:"center", alignItems:"center",
+      minHeight:"100vh", padding:"24px 16px",
+      background:`radial-gradient(ellipse at 25% 0%,#001a33 0%,${C.bg} 45%,#000810 100%)`,
+      fontFamily:F.sans }}>
+
+      <style>{`
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.5)}50%{box-shadow:0 0 0 6px rgba(5,150,105,0)}}
+        ::-webkit-scrollbar{width:2px}
+        ::-webkit-scrollbar-thumb{background:${C.gold}40;border-radius:10px}
+      `}</style>
+
+      {/* Kitufe cha dharura cha kurudi kwenye Landing Page ya nje wakati wowote */}
+      <button onClick={() => setViewMode("landing")} style={{
+        position: "absolute", top: 20, left: 20, background: C.card, border: `1px solid ${C.dim}40`,
+        color: C.gold, padding: "8px 14px", borderRadius: 20, fontSize: 10, fontFamily: F.mono,
+        cursor: "pointer", zIndex: 100
+      }}>
+        ← Toka Nje (Landing Page)
+      </button>
+
+      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:18 }}>
+
+        {/* Header ya Juu ya Simu */}
+        <div style={{ textAlign:"center" }}>
+          <p style={{ color:C.orange, fontSize:8.5, fontFamily:"'JetBrains Mono'",
+            letterSpacing:4, margin:"0 0 5px", fontWeight:700 }}>
+            INTERACTIVE PROTOTYPE · LIVE SIMULATOR</p>
+          <h1 style={{ fontSize:32, fontFamily:"'Cormorant Garamond'", fontStyle:"italic",
+            fontWeight:700, margin:0,
+            background:`linear-gradient(135deg,${C.white} 0%,${C.goldX} 55%,${C.orange} 100%)`,
+            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+            SAMI SIX APP</h1>
+          <p style={{ color:C.orange, fontSize:9.5, fontFamily:"'Plus Jakarta Sans'",
+            fontWeight:600, margin:"3px 0 2px" }}>
+            Digital Procurement + Cargo Credit Platform</p>
+        </div>
+
+        {/* PHONE GANDA */}
+        <div style={{ width:324, background:"#0a0a0a", borderRadius:48, padding:"11px 9px",
+          boxShadow:`0 60px 130px rgba(0,0,0,0.95),0 0 0 1px #1a1a1a,
+            inset 0 0 0 2px #2a2a2a,0 0 100px ${C.orange}05` }}>
+          <div style={{ display:"flex", justifyContent:"center", marginBottom:7 }}>
+            <div style={{ width:92, height:10, background:"#000", borderRadius:10 }} />
+          </div>
+          <div style={{ width:306, height:606, background:C.bg, borderRadius:36,
+            overflow:"hidden", display:"flex", flexDirection:"column" }}>
+            <StatusBar />
+            {screen !== "home" && (
+              <div style={{ background:C.navy2, display:"flex", alignItems:"center",
+                padding:"7px 13px", borderBottom:`1px solid ${C.gold}15`, flexShrink:0 }}>
+                <button onClick={goBack} style={{ background:"none", border:"none", color:C.gold,
+                  cursor:"pointer", fontSize:16, padding:0, marginRight:8 }}>←</button>
+                <span style={{ color:C.white, fontSize:11, fontWeight:700,
+                  fontFamily:F.sans, flex:1 }}>{cur.title}</span>
+                <span style={{ color:C.orange, fontSize:8, fontFamily:F.mono, fontWeight:700 }}>SAMI SIX</span>
+              </div>
+            )}
+            <div style={{ flex:1, overflow:"hidden" }}><Comp nav={nav} /></div>
+            <div style={{ background:C.navy2, borderTop:`1px solid ${C.gold}15`,
+              display:"flex", padding:"6px 0 8px", flexShrink:0 }}>
+              {BOTTOM_NAV.map(item => {
+                const active = screen === item.id;
+                return (
+                  <button key={item.id} onClick={() => nav(item.id)} style={{ flex:1,
+                    background:"none", border:"none", cursor:"pointer",
+                    display:"flex", flexDirection:"column", alignItems:"center", gap:2, padding:"3px 0" }}>
+                    <span style={{ fontSize:14, filter:active?"none":"grayscale(70%) opacity(35%)" }}>{item.icon}</span>
+                    <span style={{ color:active?C.goldL:C.dim, fontSize:7.5,
+                      fontFamily:F.mono, fontWeight:active?700:400 }}>{item.label}</span>
+                    {active && <div style={{ width:14, height:2, background:C.gold,
+                      borderRadius:2, boxShadow:`0 0 6px ${C.gold}` }} />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div style={{ display:"flex", justifyContent:"center", marginTop:8 }}>
+            <div style={{ width:68, height:4, background:"#2a2a2a", borderRadius:4 }} />
+          </div>
+        </div>
+
+        
