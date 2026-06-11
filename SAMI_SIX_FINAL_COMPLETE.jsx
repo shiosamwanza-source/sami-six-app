@@ -909,7 +909,7 @@ function ScreenOrders({ nav }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// NAV + ROUTING
+// NAV + ROUTING CONFIG
 // ═══════════════════════════════════════════════════════════════════
 const BOTTOM_NAV = [
   { id:"home",     icon:"⌂",  label:"Home"   },
@@ -942,75 +942,9 @@ const QUICK = [
 ];
 
 // ═══════════════════════════════════════════════════════════════════
-// ROOT
-// ═══════════════════════════════════════════════════════════════════
-        {/* PHONE */}
-        <div style={{ width:324, background:"#0a0a0a", borderRadius:48, padding:"11px 9px",
-          boxShadow:`0 60px 130px rgba(0,0,0,0.95),0 0 0 1px #1a1a1a,
-            inset 0 0 0 2px #2a2a2a,0 0 100px ${C.orange}05` }}>
-          <div style={{ display:"flex", justifyContent:"center", marginBottom:7 }}>
-            <div style={{ width:92, height:10, background:"#000", borderRadius:10 }} />
-          </div>
-          <div style={{ width:306, height:606, background:C.bg, borderRadius:36,
-            overflow:"hidden", display:"flex", flexDirection:"column" }}>
-            <StatusBar />
-            {screen !== "home" && (
-              <div style={{ background:C.navy2, display:"flex", alignItems:"center",
-                padding:"7px 13px", borderBottom:`1px solid ${C.gold}15`, flexShrink:0 }}>
-                <button onClick={goBack} style={{ background:"none", border:"none", color:C.gold,
-                  cursor:"pointer", fontSize:16, padding:0, marginRight:8 }}>←</button>
-                <span style={{ color:C.white, fontSize:11, fontWeight:700,
-                  fontFamily:F.sans, flex:1 }}>{cur.title}</span>
-                <span style={{ color:C.orange, fontSize:8, fontFamily:F.mono, fontWeight:700 }}>SAMI SIX</span>
-              </div>
-            )}
-            <div style={{ flex:1, overflow:"hidden" }}><Comp nav={nav} /></div>
-            <div style={{ background:C.navy2, borderTop:`1px solid ${C.gold}15`,
-              display:"flex", padding:"6px 0 8px", flexShrink:0 }}>
-              {BOTTOM_NAV.map(item => {
-                const active = screen === item.id;
-                return (
-                  <button key={item.id} onClick={() => nav(item.id)} style={{ flex:1,
-                    background:"none", border:"none", cursor:"pointer",
-                    display:"flex", flexDirection:"column", alignItems:"center", gap:2, padding:"3px 0" }}>
-                    <span style={{ fontSize:14, filter:active?"none":"grayscale(70%) opacity(35%)" }}>{item.icon}</span>
-                    <span style={{ color:active?C.goldL:C.dim, fontSize:7.5,
-                      fontFamily:F.mono, fontWeight:active?700:400 }}>{item.label}</span>
-                    {active && <div style={{ width:14, height:2, background:C.gold,
-                      borderRadius:2, boxShadow:`0 0 6px ${C.gold}` }} />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <div style={{ display:"flex", justifyContent:"center", marginTop:8 }}>
-            <div style={{ width:68, height:4, background:"#2a2a2a", borderRadius:4 }} />
-          </div>
-        </div>
-
-        {/* Quick access */}
-        <div style={{ display:"flex", gap:5, flexWrap:"wrap", justifyContent:"center", maxWidth:420 }}>
-          {QUICK.map(q => (
-            <button key={q.id} onClick={() => nav(q.id)} style={{ padding:"5px 12px", borderRadius:20,
-              border:`1px solid ${screen===q.id?q.color:C.dim+"40"}`,
-              background:screen===q.id?`${q.color}18`:"transparent",
-              color:screen===q.id?q.color:C.dim,
-              fontSize:9, fontFamily:F.mono, cursor:"pointer", transition:"all 0.2s" }}>{q.label}</button>
-          ))}
-        </div>
-
-        <p style={{ color:C.dim, fontSize:8.5, fontFamily:F.mono, margin:0, textAlign:"center" }}>
-          ← back inside phone · tap pills to jump · scroll inside screen
-        </p>
-      </div>
-    </div>
-  );
-}
-// ═══════════════════════════════════════════════════════════════════
-// NEW LANDING PAGE & ROOT ROUTING
+// ROOT ENGINE & LANDING PAGE ROUTING
 // ═══════════════════════════════════════════════════════════════════
 export default function App() {
-  // 'landing' ndio inakuwa ukurasa wa kwanza kabisa mtu akifungua link kutoka nje
   const [viewMode, setViewMode] = useState("landing"); 
   const [screen, setScreen] = useState("home");
   const [hist, setHist] = useState(["home"]);
@@ -1044,7 +978,7 @@ export default function App() {
             CONGO / FARU STREET · DAR ES SALAAM
           </p>
           <h1 style={{ fontSize: "clamp(42px, 6vw, 64px)", fontFamily: F.display, fontStyle: "italic", fontWeight: 700, margin: 0,
-            background: `linear-gradient(135deg, ${C.white} 0%, ${C.goldX} 50%, ${C.orange} 100%)`,
+            background: `linear-gradient(135deg, ${C.white} 0%, ${C.goldX} 55%, ${C.orange} 100%)`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             SAMI SIX APP
           </h1>
@@ -1098,7 +1032,7 @@ export default function App() {
     );
   }
 
-  // 2. UKURASA WA NDANI: PHONE APP INTERACTION (Utakapobonyeza kitufe cha juu)
+  // 2. UKURASA WA NDANI: INTERACTIVE PHONE SIMULATOR
   return (
     <div style={{ display:"flex", justifyContent:"center", alignItems:"center",
       minHeight:"100vh", padding:"24px 16px",
@@ -1111,7 +1045,7 @@ export default function App() {
         ::-webkit-scrollbar-thumb{background:${C.gold}40;border-radius:10px}
       `}</style>
 
-      {/* Kitufe cha dharura cha kurudi kwenye Landing Page ya nje wakati wowote */}
+      {/* Kitufe cha kurudi kwenye Landing Page ya nje */}
       <button onClick={() => setViewMode("landing")} style={{
         position: "absolute", top: 20, left: 20, background: C.card, border: `1px solid ${C.dim}40`,
         color: C.gold, padding: "8px 14px", borderRadius: 20, fontSize: 10, fontFamily: F.mono,
@@ -1124,15 +1058,15 @@ export default function App() {
 
         {/* Header ya Juu ya Simu */}
         <div style={{ textAlign:"center" }}>
-          <p style={{ color:C.orange, fontSize:8.5, fontFamily:"'JetBrains Mono'",
+          <p style={{ color:C.orange, fontSize:8.5, fontFamily:F.mono,
             letterSpacing:4, margin:"0 0 5px", fontWeight:700 }}>
             INTERACTIVE PROTOTYPE · LIVE SIMULATOR</p>
-          <h1 style={{ fontSize:32, fontFamily:"'Cormorant Garamond'", fontStyle:"italic",
+          <h1 style={{ fontSize:32, fontFamily:F.display, fontStyle:"italic",
             fontWeight:700, margin:0,
             background:`linear-gradient(135deg,${C.white} 0%,${C.goldX} 55%,${C.orange} 100%)`,
             WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
             SAMI SIX APP</h1>
-          <p style={{ color:C.orange, fontSize:9.5, fontFamily:"'Plus Jakarta Sans'",
+          <p style={{ color:C.orange, fontSize:9.5, fontFamily:F.sans,
             fontWeight:600, margin:"3px 0 2px" }}>
             Digital Procurement + Cargo Credit Platform</p>
         </div>
@@ -1195,98 +1129,3 @@ export default function App() {
     </div>
   );
 }
-/          </p>
-        </div>
-
-        {/* Background Footer Detail */}
-        <div style={{ marginTop: "auto", opacity: 0.25, fontSize: 10, fontFamily: F.mono }}>
-          © 2025-2026 SAMI SIX APP · Powered by 15+ Years of Active Field Infrastructure
-        </div>
-      </div>
-    );
-  }
-
-  // 2. UKURASA WA NDANI: PHONE APP INTERACTION (Utakapobonyeza kitufe cha juu)
-  return (
-    <div style={{ display:"flex", justifyContent:"center", alignItems:"center",
-      minHeight:"100vh", padding:"24px 16px",
-      background:`radial-gradient(ellipse at 25% 0%,#001a33 0%,${C.bg} 45%,#000810 100%)`,
-      fontFamily:F.sans }}>
-
-      <style>{`
-        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.5)}50%{box-shadow:0 0 0 6px rgba(5,150,105,0)}}
-        ::-webkit-scrollbar{width:2px}
-        ::-webkit-scrollbar-thumb{background:${C.gold}40;border-radius:10px}
-      `}</style>
-
-      {/* Kitufe cha dharura cha kurudi kwenye Landing Page ya nje wakati wowote */}
-      <button onClick={() => setViewMode("landing")} style={{
-        position: "absolute", top: 20, left: 20, background: C.card, border: `1px solid ${C.dim}40`,
-        color: C.gold, padding: "8px 14px", borderRadius: 20, fontSize: 10, fontFamily: F.mono,
-        cursor: "pointer", zIndex: 100
-      }}>
-        ← Toka Nje (Landing Page)
-      </button>
-
-      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:18 }}>
-
-        {/* Header ya Juu ya Simu */}
-        <div style={{ textAlign:"center" }}>
-          <p style={{ color:C.orange, fontSize:8.5, fontFamily:"'JetBrains Mono'",
-            letterSpacing:4, margin:"0 0 5px", fontWeight:700 }}>
-            INTERACTIVE PROTOTYPE · LIVE SIMULATOR</p>
-          <h1 style={{ fontSize:32, fontFamily:"'Cormorant Garamond'", fontStyle:"italic",
-            fontWeight:700, margin:0,
-            background:`linear-gradient(135deg,${C.white} 0%,${C.goldX} 55%,${C.orange} 100%)`,
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
-            SAMI SIX APP</h1>
-          <p style={{ color:C.orange, fontSize:9.5, fontFamily:"'Plus Jakarta Sans'",
-            fontWeight:600, margin:"3px 0 2px" }}>
-            Digital Procurement + Cargo Credit Platform</p>
-        </div>
-
-        {/* PHONE GANDA */}
-        <div style={{ width:324, background:"#0a0a0a", borderRadius:48, padding:"11px 9px",
-          boxShadow:`0 60px 130px rgba(0,0,0,0.95),0 0 0 1px #1a1a1a,
-            inset 0 0 0 2px #2a2a2a,0 0 100px ${C.orange}05` }}>
-          <div style={{ display:"flex", justifyContent:"center", marginBottom:7 }}>
-            <div style={{ width:92, height:10, background:"#000", borderRadius:10 }} />
-          </div>
-          <div style={{ width:306, height:606, background:C.bg, borderRadius:36,
-            overflow:"hidden", display:"flex", flexDirection:"column" }}>
-            <StatusBar />
-            {screen !== "home" && (
-              <div style={{ background:C.navy2, display:"flex", alignItems:"center",
-                padding:"7px 13px", borderBottom:`1px solid ${C.gold}15`, flexShrink:0 }}>
-                <button onClick={goBack} style={{ background:"none", border:"none", color:C.gold,
-                  cursor:"pointer", fontSize:16, padding:0, marginRight:8 }}>←</button>
-                <span style={{ color:C.white, fontSize:11, fontWeight:700,
-                  fontFamily:F.sans, flex:1 }}>{cur.title}</span>
-                <span style={{ color:C.orange, fontSize:8, fontFamily:F.mono, fontWeight:700 }}>SAMI SIX</span>
-              </div>
-            )}
-            <div style={{ flex:1, overflow:"hidden" }}><Comp nav={nav} /></div>
-            <div style={{ background:C.navy2, borderTop:`1px solid ${C.gold}15`,
-              display:"flex", padding:"6px 0 8px", flexShrink:0 }}>
-              {BOTTOM_NAV.map(item => {
-                const active = screen === item.id;
-                return (
-                  <button key={item.id} onClick={() => nav(item.id)} style={{ flex:1,
-                    background:"none", border:"none", cursor:"pointer",
-                    display:"flex", flexDirection:"column", alignItems:"center", gap:2, padding:"3px 0" }}>
-                    <span style={{ fontSize:14, filter:active?"none":"grayscale(70%) opacity(35%)" }}>{item.icon}</span>
-                    <span style={{ color:active?C.goldL:C.dim, fontSize:7.5,
-                      fontFamily:F.mono, fontWeight:active?700:400 }}>{item.label}</span>
-                    {active && <div style={{ width:14, height:2, background:C.gold,
-                      borderRadius:2, boxShadow:`0 0 6px ${C.gold}` }} />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <div style={{ display:"flex", justifyContent:"center", marginTop:8 }}>
-            <div style={{ width:68, height:4, background:"#2a2a2a", borderRadius:4 }} />
-          </div>
-        </div>
-
-        
